@@ -4,13 +4,19 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 require('dotenv').config();
 const app = express()
-const port = 3010
 
 app.use(cors())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 const urlencodedParser = bodyParser.urlencoded({extended: false})
+
+const {
+  GMAIL_BOX_LOGIN,
+  GMAIL_BOX_PASSWORD,
+  GMAIL_BOX_REQUEST_PORT,
+  GMAIL_RECIPIENT
+} = process.env
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -20,10 +26,8 @@ app.get('/', (req, res) => {
 let transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.EMAIL,
-    pass: process.env.PASSWORD,
-    // user: "andrewgaityportfolio@gmail.com",
-    // pass: "sdfnsdFH9349345jr3i",
+    user: GMAIL_BOX_LOGIN,
+    pass: GMAIL_BOX_PASSWORD,
   },
 });
 
@@ -32,18 +36,17 @@ app.post('/send', urlencodedParser, async (req, res) => {
 
   const {name, email, message} = req.body
 
-
   await transporter.sendMail({
-    from: 'Portfolio, andrewgaityportfolio@gmail.com',
-    to: "Andrewgaity@yandex.by",
+    from: 'Portfolio',
+    to: GMAIL_RECIPIENT,
     subject: "Hello from  portfolio",
     html: `<div>name: ${name}</div><div>contact: ${email}</div><div>message: ${message}</div>`,
   });
-  // console.log(process.env.EMAIL)
+
   res.send({result: "I got you data"})
 })
 
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+app.listen(GMAIL_BOX_REQUEST_PORT, () => {
+  console.log(`Example app listening on port ${GMAIL_BOX_REQUEST_PORT}`)
 })
