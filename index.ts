@@ -14,7 +14,6 @@ const urlencodedParser = bodyParser.urlencoded({extended: false})
 const {
   GMAIL_BOX_LOGIN,
   GMAIL_BOX_PASSWORD,
-  GMAIL_BOX_REQUEST_PORT,
   GMAIL_RECIPIENT
 } = process.env
 
@@ -47,6 +46,8 @@ app.post('/send', urlencodedParser, async (req, res) => {
 })
 
 
-app.listen(GMAIL_BOX_REQUEST_PORT, () => {
-  console.log(`Example app listening on port ${GMAIL_BOX_REQUEST_PORT}`)
+const port = process.env.GMAIL_BOX_REQUEST_PORT
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
 })
