@@ -46,7 +46,7 @@ app.post('/send', urlencodedParser, async (req, res) => {
 })
 
 
-const port = process.env.GMAIL_BOX_REQUEST_PORT
+const port = process.env.PORT
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
