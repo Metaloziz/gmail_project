@@ -42,7 +42,7 @@ app.post('/send', urlencodedParser, async (req, res) => {
     html: `<div>name: ${name}</div><div>contact: ${email}</div><div>message: ${message}</div>`,
   });
 
-  res.send({result: "I got you data"})
+  res.send({result: "I got you data man"})
 })
 
 
